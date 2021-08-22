@@ -36,8 +36,8 @@ public class RegionDAO {
         new FileMaker().escribir(regiones, "regiones");
     }
 
-    public void delete() {
-
+    public void delete(RegionDTO region) {
+        this.regiones.remove(region);
     }
 
     public RegionDTO findByID(int id) throws NotFoundException {

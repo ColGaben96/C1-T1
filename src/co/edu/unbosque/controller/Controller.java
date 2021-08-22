@@ -6,42 +6,90 @@ import co.edu.unbosque.model.exception.NotFoundException;
 import co.edu.unbosque.model.persistence.utils.Condicion;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Scanner;
 
 public class Controller {
 
     private Celuventas modelo = new Celuventas();
+    private Scanner sc = new Scanner(System.in);
 
     public void consola() {
-        try {
-            modelo.getRegion().save(1, "Norteamérica");
-            modelo.getMarca().save("Apple",
-                    modelo.getRegion().findByID(1));
-            modelo.getMarca().save("Google",
-                    modelo.getRegion().findByID(1));
-            modelo.getModelo().save("iPhone 11 Pro",
-                    modelo.getMarca().findByExactName("Apple"));
-            modelo.getCelular().save(1235L, 4323L,
-                    modelo.getModelo().findByExactName("iPhone 11 Pro"),
-                    null,
-                    null, Condicion.REACONDICIONADO);
-            modelo.getCelular().save(1235L, 4324L,
-                    modelo.getModelo().findByExactName("iPhone 11 Pro"),
-                    null,
-                    null, Condicion.USADO);
-        } catch (AlreadyExistsException | IOException | NotFoundException e) {
-            e.printStackTrace();
-        }
-        var listas = modelo.getCelular().findAll();
-        for (int i = 0; i < listas.size(); i++) {
-            System.out.println(listas.get(i).getModelo().getMarca().getNombre()+" "+listas.get(i).getModelo().getReferencia()+" "+listas.get(i).getCondicion());
+        System.out.println("""
+                --------------------------------------------------------
+                                   Portal Celuventas
+                                 V1.0 - Gabriel Blanco
+                                 Para ayuda ingresar '1'.
+                --------------------------------------------------------
+                """);
+        inventariar();
+        boolean active = true;
+        while(active) {
+            System.out.print("\nIngresa una opción: ");
+            var opcion = sc.next();
+            switch (opcion) {
+                default -> System.out.println("Opción Inválida");
+                case "0" -> active = false;
+                case "1" -> ayuda();
+            }
         }
     }
 
-    public void consola2() {
-        var listas = modelo.getCelular().findAll();
-        for (int i = 0; i < listas.size(); i++) {
-            System.out.println(listas.get(i).getModelo().getMarca().getNombre()+" "+listas.get(i).getModelo().getReferencia()+" "+listas.get(i).getCondicion());
+    public void ayuda() {
+        System.out.println("""
+                0 - Salir de esta aplicación
+                1 - Mostrar esta ayuda""");
+    }
+
+    public void inventariar() {
+        var celulares = modelo.getCelular().findAll().size();
+        var marcas = modelo.getMarca().findAll().size();
+        var modelos = modelo.getModelo().findAll().size();
+        System.out.println("\n"+celulares+" celulares registrados\n" +
+                +marcas+" marcas registradas\n" +
+                +modelos+" modelos registrados\n");
+    }
+
+    public void anadirCelular() {
+
+    }
+
+    public void anadirModelo() {
+
+    }
+
+    public void anadirMarca() {
+
+    }
+
+    public void anadirRegion() {
+
+    }
+
+    public void listarMarcas() {
+
+    }
+
+    public void listarRegiones() {
+        var regiones = modelo.getRegion().findAll();
+        System.out.println("""
+                |Código ID|Nombre|""");
+        for (int i = 0; i < regiones.size(); i++) {
+            System.out.print("|"+regiones.get(i).getId()+"|"+regiones.get(i).getNombre()+"|\n");
         }
+    }
+
+    public void listarModelos() {
+        var modelos = modelo.getModelo().findAll();
+        System.out.println("""
+                |Marca|Referencia|""");
+        for (int i = 0; i < modelos.size(); i++) {
+            System.out.print("|"+modelos.get(i).getMarca().getNombre()+"|"+modelos.get(i).getReferencia()+"|\n");
+        }
+    }
+
+    public void listarCelulares() {
+
     }
 }
 

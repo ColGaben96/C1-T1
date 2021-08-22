@@ -38,8 +38,8 @@ public class ModeloDAO {
 
     }
 
-    public void delete() {
-
+    public void delete(ModeloDTO modelo) {
+        this.modelos.remove(modelo);
     }
 
     public ArrayList<ModeloDTO> findByName(String referencia) {

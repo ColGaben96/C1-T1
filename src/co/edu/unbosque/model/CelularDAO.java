@@ -28,7 +28,8 @@ public class CelularDAO {
         return celulares;
     }
 
-    public void save(Long sku, Long imei, ModeloDTO modelo, Date fechaIngreso, Date fechaVenta, Condicion condicion) throws AlreadyExistsException, IOException {
+    public void save(Long sku, Long imei, ModeloDTO modelo, Date fechaIngreso, Date fechaVenta, Condicion condicion)
+            throws AlreadyExistsException, IOException {
         var celular = new CelularDTO(sku, imei, modelo, fechaIngreso, fechaVenta, condicion);
         for (CelularDTO busqueda : celulares) {
             if(busqueda.getImei() == celular.getImei()) {
@@ -42,5 +43,24 @@ public class CelularDAO {
     public void delete(CelularDTO celular) throws IOException {
         this.celulares.remove(celular);
         new FileMaker().escribir(findAll(), "celulares");
+    }
+
+    public CelularDTO findBySKU(long sku) {
+        for (CelularDTO busqueda : celulares) {
+            if (busqueda.getSku() == sku) {
+                return busqueda;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<CelularDTO> findByCondition(Condicion condicion) {
+        var encontrados = new ArrayList<CelularDTO>();
+        for (CelularDTO busqueda : celulares) {
+            if (busqueda.getCondicion() == condicion) {
+                encontrados.add(busqueda);
+            }
+        }
+        return encontrados;
     }
 }
