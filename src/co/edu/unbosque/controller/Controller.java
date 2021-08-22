@@ -22,15 +22,19 @@ public class Controller {
                                  Para ayuda ingresar '1'.
                 --------------------------------------------------------
                 """);
-        inventariar();
         boolean active = true;
         while(active) {
+            inventariar();
             System.out.print("\nIngresa una opción: ");
             var opcion = sc.next();
             switch (opcion) {
                 default -> System.out.println("Opción Inválida");
                 case "0" -> active = false;
                 case "1" -> ayuda();
+                case "2" -> anadirRegion();
+                case "3" -> anadirMarca();
+                case "4" -> anadirModelo();
+                case "5" -> anadirCelular();
             }
         }
     }
@@ -51,19 +55,88 @@ public class Controller {
     }
 
     public void anadirCelular() {
+        var modelos = modelo.getModelo().findAll();
+        var opcion = "";
+        if (modelos.size() == 0) {
+            anadirModelo();
+        } else {
 
+        }
     }
 
     public void anadirModelo() {
-
+        var marcas = modelo.getMarca().findAll();
+        var opcion = "";
+        var nombre = "";
+        if (marcas.size() == 0) {
+            anadirMarca();
+        } else {
+            System.out.println("Selecciona las siguientes marcas del modelo a registrar: ");
+            for (int i = 0; i < marcas.size(); i++) {
+                System.out.print((i+1)+") "+marcas.get(i).getNombre()+"\n");
+            }
+            System.out.println(marcas.size()+1+") Añadir una nueva marca");
+            System.out.print("Ingresa una opción: ");
+            opcion = sc.next();
+            if (Integer.parseInt(opcion) == marcas.size()+1) {
+                anadirMarca();
+            }
+            for (int i = 0; i < marcas.size(); i++) {
+                nombre = marcas.get(Integer.parseInt(opcion)-1).getNombre();
+            }
+        }
+        System.out.print("Ingresa la referencia del modelo a registrar: ");
+        var referencia = sc.next();
+        try {
+            modelo.getModelo().save(referencia,
+                    modelo.getMarca().findByExactName(nombre));
+        } catch (AlreadyExistsException | IOException e) {
+            System.out.println("El modelo que intentas agregar "+e.getMessage());
+        } catch (NotFoundException e) {
+            System.out.println("Opción Inválida");
+            anadirModelo();
+        }
     }
 
     public void anadirMarca() {
+        var regiones = modelo.getRegion().findAll();
+        var opcion = "";
+        if (regiones.size() == 0) {
+            anadirRegion();
+        } else {
+            System.out.println("Selecciona las siguientes regiones de la marca a registrar: ");
+            for (int i = 0; i < regiones.size(); i++) {
+                System.out.print(regiones.get(i).getId()+") "+regiones.get(i).getNombre()+"\n");
+            }
+            System.out.println((regiones.size()+1)+") Añadir una nueva región");
+            System.out.print("Ingresa una opción: ");
+            opcion = sc.next();
+            if (Integer.parseInt(opcion) == regiones.size()+1) {
+                anadirRegion();
+            }
+        }
+        System.out.print("Ingresa el nombre de la marca a registrar: ");
+        var nombre = sc.next();
+        try {
+            modelo.getMarca().save(nombre, modelo.getRegion().findByID(Integer.parseInt(opcion)));
+        } catch (AlreadyExistsException | IOException e) {
+            System.out.println("La marca que estás intentando agregar "+e.getMessage());
+        } catch (NotFoundException e) {
+            System.out.println("Opción Inválida");
+            anadirMarca();
+        }
 
     }
 
     public void anadirRegion() {
-
+        System.out.print("Ingresa el nombre de la región: ");
+        var nombre = sc.next();
+        var id = modelo.getRegion().findAll().size() + 1;
+        try {
+            modelo.getRegion().save(id, nombre);
+        } catch (AlreadyExistsException | IOException e) {
+            System.out.println("La región que estás intentando agregar "+e.getMessage());
+        }
     }
 
     public void listarMarcas() {
