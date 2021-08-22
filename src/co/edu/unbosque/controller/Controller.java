@@ -64,7 +64,6 @@ public class Controller {
     public void anadirCelular() {
         var modelos = modelo.getModelo().findAll();
         var opcion = "";
-        var marca = "";
         var referencia = new Object();
         if (modelos.size() == 0) {
             anadirModelo();
