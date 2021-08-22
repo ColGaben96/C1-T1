@@ -2,11 +2,14 @@ package co.edu.unbosque.model;
 
 import co.edu.unbosque.model.exception.AlreadyExistsException;
 import co.edu.unbosque.model.persistence.CelularDTO;
+import co.edu.unbosque.model.persistence.ModeloDTO;
 import co.edu.unbosque.model.persistence.RegionDTO;
+import co.edu.unbosque.model.persistence.utils.Condicion;
 import co.edu.unbosque.model.persistence.utils.FileMaker;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CelularDAO {
 
@@ -25,7 +28,8 @@ public class CelularDAO {
         return celulares;
     }
 
-    public void save(CelularDTO celular) throws AlreadyExistsException, IOException {
+    public void save(Long sku, Long imei, ModeloDTO modelo, Date fechaIngreso, Date fechaVenta, Condicion condicion) throws AlreadyExistsException, IOException {
+        var celular = new CelularDTO(sku, imei, modelo, fechaIngreso, fechaVenta, condicion);
         for (CelularDTO busqueda : celulares) {
             if(busqueda.getImei() == celular.getImei()) {
                 throw new AlreadyExistsException();

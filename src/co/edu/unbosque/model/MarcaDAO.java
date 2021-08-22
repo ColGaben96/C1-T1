@@ -1,6 +1,7 @@
 package co.edu.unbosque.model;
 
 import co.edu.unbosque.model.exception.AlreadyExistsException;
+import co.edu.unbosque.model.exception.NotFoundException;
 import co.edu.unbosque.model.persistence.MarcaDTO;
 import co.edu.unbosque.model.persistence.RegionDTO;
 import co.edu.unbosque.model.persistence.utils.FileMaker;
@@ -49,5 +50,14 @@ public class MarcaDAO {
             }
         }
         return encontrados;
+    }
+
+    public MarcaDTO findByExactName(String nombre) throws NotFoundException {
+        for (MarcaDTO busqueda : marcas) {
+            if (busqueda.getNombre().equals(nombre)) {
+                return busqueda;
+            }
+        }
+        throw new NotFoundException();
     }
 }
