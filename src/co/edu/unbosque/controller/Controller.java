@@ -25,11 +25,18 @@ public class Controller {
             System.out.println(listas.get(i).getNombre());
         }
     }
+
+    public void consola2() {
+        var listas2 = modelo.getMarca().findAll();
+        for (int i = 0; i < listas2.size(); i++) {
+            System.out.println(listas2.get(i).getNombre() + " - " + listas2.get(i).getRegion().getNombre());
+        }
+    }
 }
 
 class Launcher {
     public static void main(String[] args) {
         Controller c = new Controller();
-        c.consola();
+        c.consola2();
     }
 }

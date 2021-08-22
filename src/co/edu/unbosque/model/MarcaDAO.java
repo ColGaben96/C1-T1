@@ -12,6 +12,15 @@ public class MarcaDAO {
 
     private ArrayList<MarcaDTO> marcas = new ArrayList<>();
 
+    public MarcaDAO() {
+        try {
+            var marcasRestored = new FileMaker().leer("marcas");
+            this.marcas = (ArrayList<MarcaDTO>) marcasRestored;
+        } catch (IOException | ClassNotFoundException e) {
+            //TODO: Poner algo aqui
+        }
+    }
+
     public ArrayList<MarcaDTO> findAll() {
         return marcas;
     }

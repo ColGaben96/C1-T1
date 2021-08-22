@@ -12,6 +12,15 @@ public class RegionDAO {
 
     private ArrayList<RegionDTO> regiones = new ArrayList<>();
 
+    public RegionDAO() {
+        try {
+            var regionesRestored = new FileMaker().leer("regiones");
+            this.regiones = (ArrayList<RegionDTO>) regionesRestored;
+        } catch (IOException | ClassNotFoundException e) {
+            //TODO: Poner algo aqui
+        }
+    }
+
     public ArrayList<RegionDTO> findAll() {
         return regiones;
     }

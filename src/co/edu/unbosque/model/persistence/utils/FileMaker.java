@@ -13,21 +13,16 @@ public class FileMaker {
         fos.close();
     }
 
-    public ArrayList<Object> leer(String nombre) throws IOException, ClassNotFoundException {
-        var obj = new ArrayList<Object>();
+    public Object leer(String nombre) throws IOException, ClassNotFoundException {
+        Object obj = null;
         File f = new File(nombre+".cer");
         FileInputStream fis = new FileInputStream(f);
         try {
             ObjectInputStream ois = new ObjectInputStream(fis);
-            var line = ois.readObject();
-            while (line != null) {
-                obj.add(line);
-                line = ois.readObject();
-            }
+            obj = ois.readObject();
         } catch (EOFException e) {
             fis.close();
         }
-        fis.close();
         return obj;
     }
 }

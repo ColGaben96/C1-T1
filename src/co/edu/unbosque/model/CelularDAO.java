@@ -15,7 +15,7 @@ public class CelularDAO {
     public CelularDAO() {
         try {
             var celularesRestored = new FileMaker().leer("celulares");
-            this.celulares.getClass().cast(celularesRestored);
+            this.celulares = (ArrayList<CelularDTO>) celularesRestored;
         } catch (IOException | ClassNotFoundException e) {
             //TODO: Poner algo aqui
         }
