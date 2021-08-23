@@ -41,7 +41,6 @@ public class Controller {
                 case "7" -> listarMarcas();
                 case "8" -> listarModelos();
                 case "9" -> listarCelulares();
-
             }
         }
     }
