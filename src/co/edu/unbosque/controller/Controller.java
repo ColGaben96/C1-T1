@@ -3,10 +3,12 @@ package co.edu.unbosque.controller;
 import co.edu.unbosque.model.Celuventas;
 import co.edu.unbosque.model.exception.AlreadyExistsException;
 import co.edu.unbosque.model.exception.NotFoundException;
+import co.edu.unbosque.model.persistence.ModeloDTO;
 import co.edu.unbosque.model.persistence.utils.Condicion;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Controller {
@@ -35,6 +37,10 @@ public class Controller {
                 case "3" -> anadirMarca();
                 case "4" -> anadirModelo();
                 case "5" -> anadirCelular();
+                case "6" -> listarRegiones();
+                case "7" -> listarMarcas();
+                case "8" -> listarModelos();
+                case "9" -> listarCelulares();
             }
         }
     }
@@ -57,14 +63,55 @@ public class Controller {
     public void anadirCelular() {
         var modelos = modelo.getModelo().findAll();
         var opcion = "";
+        var referencia = new Object();
         if (modelos.size() == 0) {
             anadirModelo();
         } else {
-
+            System.out.println("Selecciona los siguientes modelos del celular a registrar: ");
+            for (int i = 0; i < modelos.size(); i++) {
+                System.out.print((i+1)+") "+modelos.get(i).getMarca().getNombre()+" "+modelos.get(i).getReferencia()+"\n");
+            }
+            System.out.println(modelos.size()+1+") Añadir un modelo nuevo");
+            System.out.print("Ingresa una opción: ");
+            opcion = sc.next();
+            if (Integer.parseInt(opcion) == modelos.size()+1) {
+                anadirModelo();
+            }
+            for (int i = 0; i < modelos.size(); i++) {
+                referencia = modelos.get(Integer.parseInt(opcion)-1);
+            }
+            System.out.print("Ingresa el SKU de inventario: ");
+            var sku = sc.nextLong();
+            System.out.print("Ingresa el IMEI del equipo: ");
+            var imei = sc.nextLong();
+            System.out.println("Ingresa la condición del equipo: ");
+            System.out.println("1) "+Condicion.NUEVO+"\n" +
+                    "2) "+Condicion.REACONDICIONADO+"\n" +
+                    "3) "+Condicion.USADO+"\n" +
+                    "4) "+Condicion.DEFECTUOSO+"\n" +
+                    "5) "+Condicion.ALTERADO);
+            System.out.print("Ingresa una opción: ");
+            var condicion = sc.next();
+            switch (condicion) {
+                default -> {
+                    System.out.println("Opción Inválida");
+                    anadirCelular();
+                }
+                case "1" -> condicion = Condicion.NUEVO.toString();
+                case "2" -> condicion = Condicion.REACONDICIONADO.toString();
+                case "3" -> condicion = Condicion.USADO.toString();
+                case "4" -> condicion = Condicion.DEFECTUOSO.toString();
+                case "5" -> condicion = Condicion.ALTERADO.toString();
+            }
+            try {
+                modelo.getCelular().save(sku, imei, (ModeloDTO) referencia, new Date(), null, Condicion.valueOf(condicion));
+            } catch (AlreadyExistsException | IOException e) {
+                System.out.println("El celular que intentas agregar "+e.getMessage());
+            }
         }
     }
 
-    public void anadirModelo() { //delete
+    public void anadirModelo() {
         var marcas = modelo.getMarca().findAll();
         var opcion = "";
         var nombre = "";
@@ -140,7 +187,12 @@ public class Controller {
     }
 
     public void listarMarcas() {
-
+        var marcas = modelo.getMarca().findAll();
+        System.out.println("""
+                |Marca|Región|""");
+        for (int i = 0; i < marcas.size(); i++) {
+            System.out.print("|"+marcas.get(i).getNombre()+"|"+marcas.get(i).getRegion().getNombre()+"|\n");
+        }
     }
 
     public void listarRegiones() {
@@ -162,7 +214,16 @@ public class Controller {
     }
 
     public void listarCelulares() {
-
+        var celulares = modelo.getCelular().findAll();
+        System.out.println("""
+                |Marca|Referencia|SKU|IMEI|Condición|Fecha de Ingreso""");
+        for (int i = 0; i < celulares.size(); i++) {
+            System.out.print("|"+celulares.get(i).getModelo().getMarca().getNombre() +
+                    "|"+celulares.get(i).getModelo().getReferencia() +
+                    "|"+celulares.get(i).getSku() +
+                    "|"+celulares.get(i).getCondicion() +
+                    "|"+celulares.get(i).getFechaIngreso()+"\n");
+        }
     }
 }
 
