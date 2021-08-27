@@ -41,19 +41,149 @@ public class Controller {
     }
 
     public void modelos() {
+        System.out.println("""
+                0) Volver
+                1) Añadir un modelo
+                2) Listar todos los modelos
+                3) Buscar modelos
+                4) Editar un modelo
+                5) Eliminar un modelo""");
+        System.out.print("Ingresa una opción: ");
+        var opcion = sc.next();
+        switch (opcion) {
+            case "0" -> System.out.println();
+            case "1" -> anadirModelo();
+            case "2" -> listarModelos();
+            case "3" -> System.out.println();
+            case "4" -> {
+                System.out.println("""
+                        /!\\ ¡ALERTA!   /!\\
+                        
+                        Al editar un modelo es posible que se vean afectados uno o más celulares ligados a este. Solamente
+                        realice esta operación si está completamente seguro.""");
+                System.out.print("¿Desea Continuar? [si/no]: ");
+                var confirmacion = sc.next();
+                if (confirmacion.equals("si") || confirmacion.equals("no") || confirmacion.equals("s") || confirmacion.equals("n")) {
 
+                }
+            }
+            case "5" -> {
+                System.out.println("""
+                        /!\\ ¡ALERTA!   /!\\
+                        
+                        Al eliminar un modelo es posible que elimine uno o más celulares ligados a este. Solamente
+                        realice esta operación si está completamente seguro.""");
+                System.out.print("¿Desea Continuar? [si/no]: ");
+                var confirmacion = sc.next();
+                if (confirmacion.equals("si") || confirmacion.equals("no") || confirmacion.equals("s") || confirmacion.equals("n")) {
+
+                }
+            }
+        }
     }
 
     public void marcas() {
+        System.out.println("""
+                0) Volver
+                1) Añadir una marca
+                2) Listar todas las marcas
+                3) Buscar marcas
+                4) Editar una marca
+                5) Eliminar una marca""");
+        System.out.print("Ingresa una opción: ");
+        var opcion = sc.next();
+        switch (opcion) {
+            case "0" -> System.out.println();
+            case "1" -> anadirMarca();
+            case "2" -> listarMarcas();
+            case "3" -> System.out.println();
+            case "4" -> {
+                System.out.println("""
+                        /!\\ ¡ALERTA!   /!\\
+                        
+                        Al editar un modelo es posible que se vean afectados uno o más celulares ligados a este. Solamente realice esta operación si está completamente seguro.""");
+                System.out.print("¿Desea Continuar? [si/no]: ");
+                var confirmacion = sc.next();
+                if (confirmacion.equals("si") || confirmacion.equals("s")) {
 
+                }
+            }
+            case "5" -> {
+                System.out.println("""
+                        /!\\ ¡ALERTA!   /!\\
+                        
+                        Al eliminar un modelo es posible que elimine uno o más celulares ligados a este. Solamente realice esta operación si está completamente seguro.""");
+                System.out.print("¿Desea Continuar? [si/no]: ");
+                var confirmacion = sc.next();
+                if (confirmacion.equals("si") || confirmacion.equals("s")) {
+
+                }
+            }
+        }
     }
 
     public void celulares() {
+        System.out.println("""
+                0) Volver
+                1) Añadir un celular
+                2) Listar todos los celulares
+                3) Buscar celulares
+                4) Editar un celular
+                5) Eliminar un celular""");
+        System.out.print("Ingresa una opción: ");
+        var opcion = sc.next();
+        switch (opcion) {
+            case "0" -> System.out.println();
+            case "1" -> anadirCelular();
+            case "2" -> listarCelulares();
+            case "3" -> System.out.println();
+            case "4" -> {
 
+            }
+            case "5" -> {
+
+            }
+        }
     }
 
     public void regiones() {
+        System.out.println("""
+                0) Volver
+                1) Añadir una región
+                2) Listar todas las regiones
+                3) Buscar regiones
+                4) Editar una región
+                5) Eliminar una región""");
+        System.out.print("Ingresa una opción: ");
+        var opcion = sc.next();
+        switch (opcion) {
+            case "0" -> System.out.println();
+            case "1" -> anadirRegion();
+            case "2" -> listarRegiones();
+            case "3" -> System.out.println();
+            case "4" -> {
+                System.out.println("""
+                        /!\\ ¡ALERTA!   /!\\
+                        
+                        Al editar una región es posible que se vea afectada una gran parte de los celulares registrados. Solamente realice esta operación si está completamente seguro.""");
+                System.out.print("¿Desea Continuar? [si/no]: ");
+                var confirmacion = sc.next();
+                if (confirmacion.equals("si") || confirmacion.equals("s")) {
 
+                }
+            }
+            case "5" -> {
+                System.out.println("""
+                        /!\\ ¡ALERTA!   /!\\
+                        
+                        Al eliminar una región es posible que elimine una gran parte de los celulares registrados. Solamente realice esta operación si está completamente seguro.""");
+                System.out.print("¿Desea Continuar? [si/no]: ");
+                var confirmacion = sc.next();
+                if (confirmacion.equals("si") || confirmacion.equals("s")) {
+
+                }
+            }
+        }
     }
 
     public void ayuda() {
