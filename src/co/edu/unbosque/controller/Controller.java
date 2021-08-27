@@ -7,7 +7,6 @@ import co.edu.unbosque.model.persistence.ModeloDTO;
 import co.edu.unbosque.model.persistence.utils.Condicion;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -33,22 +32,38 @@ public class Controller {
                 default -> System.out.println("Opción Inválida");
                 case "0" -> active = false;
                 case "1" -> ayuda();
-                case "2" -> anadirRegion();
-                case "3" -> anadirMarca();
-                case "4" -> anadirModelo();
-                case "5" -> anadirCelular();
-                case "6" -> listarRegiones();
-                case "7" -> listarMarcas();
-                case "8" -> listarModelos();
-                case "9" -> listarCelulares();
+                case "2" -> celulares();
+                case "3" -> marcas();
+                case "4" -> modelos();
+                case "5" -> regiones();
             }
         }
+    }
+
+    public void modelos() {
+
+    }
+
+    public void marcas() {
+
+    }
+
+    public void celulares() {
+
+    }
+
+    public void regiones() {
+
     }
 
     public void ayuda() {
         System.out.println("""
                 0 - Salir de esta aplicación
-                1 - Mostrar esta ayuda""");
+                1 - Mostrar esta ayuda
+                2 - Operaciones con celulares
+                3 - Operaciones con marcas
+                4 - Operaciones con modelos
+                5 - Operaciones con regiones""");
     }
 
     public void inventariar() {
@@ -69,7 +84,8 @@ public class Controller {
         } else {
             System.out.println("Selecciona los siguientes modelos del celular a registrar: ");
             for (int i = 0; i < modelos.size(); i++) {
-                System.out.print((i+1)+") "+modelos.get(i).getMarca().getNombre()+" "+modelos.get(i).getReferencia()+"\n");
+                System.out.print((i+1)+") "+modelos.get(i).getMarca().getNombre()+" "+modelos.get(i).getReferencia()
+                        +"\n");
             }
             System.out.println(modelos.size()+1+") Añadir un modelo nuevo");
             System.out.print("Ingresa una opción: ");
@@ -104,7 +120,8 @@ public class Controller {
                 case "5" -> condicion = Condicion.ALTERADO.toString();
             }
             try {
-                modelo.getCelular().save(sku, imei, (ModeloDTO) referencia, new Date(), null, Condicion.valueOf(condicion));
+                modelo.getCelular().save(sku, imei, (ModeloDTO) referencia, new Date(), null,
+                        Condicion.valueOf(condicion));
             } catch (AlreadyExistsException | IOException e) {
                 System.out.println("El celular que intentas agregar "+e.getMessage());
             }

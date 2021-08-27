@@ -60,4 +60,14 @@ public class ModeloDAO {
         }
         throw new NotFoundException();
     }
+
+    public void update(ModeloDTO objviejo, String referencia, MarcaDTO marca) {
+        var modelo = new ModeloDTO(referencia, marca);
+        for (int i = 0; i < modelos.size(); i++){
+            if (modelos.get(i) == objviejo) {
+                modelos.set(i, modelo);
+                break;
+            }
+        }
+    }
 }

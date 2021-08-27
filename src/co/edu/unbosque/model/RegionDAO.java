@@ -58,4 +58,14 @@ public class RegionDAO {
         }
         return encontrados;
     }
+
+    public void update(RegionDTO objviejo, int id, String nombre) {
+        var region = new RegionDTO(id, nombre);
+        for (int i = 0; i < regiones.size(); i++) {
+            if (regiones.get(i) == objviejo) {
+                regiones.set(i, region);
+                break;
+            }
+        }
+    }
 }

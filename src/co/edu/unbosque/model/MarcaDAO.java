@@ -60,4 +60,14 @@ public class MarcaDAO {
         }
         throw new NotFoundException();
     }
+
+    public void update(MarcaDTO objviejo, String nombre, RegionDTO region) {
+        var marca = new MarcaDTO(nombre, region);
+        for (int i = 0; i < marcas.size(); i++) {
+            if (marcas.get(i) == objviejo) {
+                marcas.set(i, marca);
+                break;
+            }
+        }
+    }
 }

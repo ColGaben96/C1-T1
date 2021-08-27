@@ -1,7 +1,6 @@
 package co.edu.unbosque.model.persistence.utils;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class FileMaker {
 
